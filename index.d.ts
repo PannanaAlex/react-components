@@ -387,6 +387,7 @@ export interface TagProps extends HTMLAttributes<HTMLSpanElement> {
   onClose?: () => void;
   icon?: 'circle-fill' | 'circle' | 'loading' | 'custom' | ReactNode;
   disabled?: boolean;
+  bordered?: boolean;
 }
 export declare class Tag extends PureComponent<TagProps> {}
 

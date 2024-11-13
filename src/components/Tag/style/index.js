@@ -161,7 +161,8 @@ export const TagWrapper = withProps({
             styleType,
             disabled,
             theme: { designTokens: DT },
-            customStyle
+            customStyle,
+            bordered
         } = props;
         const colorMap = getColorMap(styleType, disabled);
         const color = customStyle?.color || DT[colorMap.color];
@@ -178,7 +179,7 @@ export const TagWrapper = withProps({
 
             color: ${color};
             background: ${bg};
-            border: 1px solid ${border};
+            ${!!bordered && `border: 1px solid ${border}`};
 
             ${PrefixIconWrapper} {
                 margin-right: 4px;
