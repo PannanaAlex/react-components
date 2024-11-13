@@ -49,10 +49,15 @@ class Tag extends PureComponent {
             background: PropTypes.string,
             /** 关闭按钮 hover 背景色 */
             closeIconHoverBackground: PropTypes.string
-        })
+        }),
+        /**
+         * 是否显示边框
+         */
+        bordered: PropTypes.bool
     };
     static defaultProps = {
-        styleType: 'default'
+        styleType: 'default',
+        bordered: true
     };
     render() {
         const { children, styleType, closable, icon, disabled, onClose, ...rest } = this.props;
