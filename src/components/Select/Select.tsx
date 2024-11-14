@@ -182,6 +182,10 @@ export interface SelectProps {
    * 支持清除功能
    */
   clearable?: boolean;
+  /**
+   * 清除icon一直展示，不是hover才显示
+   */
+  clearIconShow?: boolean;
   /** 自定义创建和搜索等其他内容 */
   extraChildren?: ReactNode;
 }
@@ -199,6 +203,7 @@ const Selector = ({
   locale,
   dataSource,
   clearable,
+  clearIconShow,
   onChange,
   ...rest
 }: Pick<
@@ -212,6 +217,7 @@ const Selector = ({
   | 'renderPopup'
   | 'value'
   | 'clearable'
+  | 'clearIconShow'
   | 'onChange'
 > & {
   visible: boolean;
@@ -282,7 +288,14 @@ const Selector = ({
   };
 
   return (
-    <SSelector size={size} disabled={disabled} title={title} clearable={clearable} {...rest}>
+    <SSelector
+      size={size}
+      disabled={disabled}
+      title={title}
+      clearable={clearable}
+      clearIconShow={clearIconShow}
+      {...rest}
+    >
       <div className={selectorContentCls} key="content">
         {content}
       </div>
@@ -543,6 +556,7 @@ const Select = ({
   renderPopup,
   virtualList,
   clearable,
+  clearIconShow,
   extraChildren,
   ...rest
 }: SelectProps & Override<HTMLAttributes<HTMLDivElement>, SelectProps>) => {
@@ -691,6 +705,7 @@ const Select = ({
                     locale,
                     dataSource,
                     clearable,
+                    clearIconShow,
                     onChange
                   }}
                 />
