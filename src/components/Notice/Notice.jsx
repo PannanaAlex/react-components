@@ -10,7 +10,7 @@ import { NoticeWrap, NoticeIconWrap, ContentWrap, ActionWrap, CloseWrap, CloseIc
 
 const deprecatedLogForStyleTypeInfo = _.once(() => deprecatedLog('Notice styleType "info"', '"success"'));
 
-const StyleType = ['default', 'success', 'warning', 'error', 'disabled'];
+const StyleType = ['default', 'success', 'warning', 'error', 'disabled', 'highWarning'];
 
 class Notice extends Component {
     state = {
@@ -44,12 +44,29 @@ class Notice extends Component {
         });
         onClose(e);
     };
+    // eslint-disable-next-line react/no-deprecated
     componentWillMount() {
         const { styleType } = this.props;
         if (styleType === 'info') {
             deprecatedLogForStyleTypeInfo();
         }
     }
+    getIconType = () => {
+        const { styleType } = this.props;
+
+        switch (styleType) {
+            case 'warning':
+                return 'exclamation-circle-filled';
+            case 'error':
+                return 'cross-circle-filled';
+            case 'success':
+                return 'tick-circle-filled';
+            case 'highWarning':
+                return 'high-warning';
+            default:
+                return 'info-circle-filled';
+        }
+    };
     render() {
         // eslint-disable-next-line no-unused-vars
         const { closable, icon: _icon, children, onClose, styleType, action, ...rest } = this.props;
@@ -62,7 +79,7 @@ class Notice extends Component {
         } else if (React.isValidElement(_icon)) {
             icon = _icon;
         } else {
-            icon = <SvgIcon size="16px" className={iconCls} type="exclamation-circle-filled" />;
+            icon = <SvgIcon size="16px" className={iconCls} type={this.getIconType()} />;
         }
         return closed ? null : (
             <NoticeWrap {...rest} styleType={styleType}>
