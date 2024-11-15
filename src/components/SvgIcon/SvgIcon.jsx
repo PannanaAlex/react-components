@@ -49,6 +49,8 @@ import InfoCircleFilled from './icons/InfoCircleFilled';
 import TickCircleFilled from './icons/TickCircleFilled';
 import CrossCircleFilled from './icons/CrossCircleFilled';
 
+import HighWarning from './icons/HighWarning';
+
 const IconMap = {
     tick: Tick,
     'tick-small': TickSmall,
@@ -81,7 +83,8 @@ const IconMap = {
     clock: Clock,
     sort: Sort,
     filter: Filter,
-    cog: Cog
+    cog: Cog,
+    'high-warning': HighWarning
 };
 
 // circle

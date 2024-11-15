@@ -15,7 +15,8 @@ const map = {
     warning: 'warning',
     error: 'error',
     info: 'success',
-    disabled: 'disabled'
+    disabled: 'disabled',
+    highWarning: 'error'
 };
 
 export const NoticeIconWrap = styled('span')`

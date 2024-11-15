@@ -346,7 +346,7 @@ export interface EditableListProps {
 export declare class EditableList extends PureComponent<EditableListProps> {}
 
 // Notice
-export type NoticeStyleType = 'default' | 'success' | 'warning' | 'error' | 'disabled';
+export type NoticeStyleType = 'default' | 'success' | 'warning' | 'error' | 'disabled' | 'highWarning';
 export interface NoticeProps extends HTMLAttributes<HTMLDivElement> {
   closable?: boolean;
   icon?: ReactNode;
