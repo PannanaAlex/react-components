@@ -106,7 +106,9 @@ export declare class NumberInput extends Component<NumberInputProps> {}
 
 // Textarea
 export type TextareaProps = HTMLAttributes<HTMLTextAreaElement>;
-export declare class Textarea extends Component<TextareaProps> {}
+export declare class Textarea extends Component<TextareaProps> {
+  isShadowInput?: boolean;
+}
 
 // Radio
 export type RadioStyleType = 'default' | 'button' | 'tag' | 'card' | 'text';

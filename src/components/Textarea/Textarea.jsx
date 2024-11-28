@@ -8,7 +8,9 @@ import { TextareaWrap } from './style';
 class Textarea extends Component {
     static propTypes = {
         /** @ignore */
-        className: PropTypes.string
+        className: PropTypes.string,
+        /** 是否使用带阴影的输入框 */
+        isShadowInput: PropTypes.bool
     };
     render() {
         const { ...rest } = this.props;
