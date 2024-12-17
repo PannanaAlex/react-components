@@ -19,7 +19,12 @@ Row.propTypes = {
     /** 水平定位 */
     justify: PropTypes.oneOf(Justify),
     /** 栅格间距，单个值为横行间隔，数组为[横向间距, 纵向间距] */
-    gutter: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]),
+    gutter: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.arrayOf(PropTypes.number),
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object)
+    ]),
     /** @ignore */
     className: PropTypes.string,
     /** @ignore */
