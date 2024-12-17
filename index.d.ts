@@ -34,6 +34,12 @@ export declare class Box extends PureComponent<BoxProps> {}
 export type RowType = 'flex';
 export type RowAlign = 'top' | 'middle' | 'bottom';
 export type RowJustify = 'start' | 'end' | 'center' | 'space-around' | 'space-between';
+export type GutterResponsive = { xs?: number; sm?: number; md?: number; lg?: number; xl?: number; xxl?: number };
+export type Gutter =
+  | number
+  | [number, number]
+  | GutterResponsive
+  | [number | GutterResponsive, number | GutterResponsive];
 export interface RowProps extends HTMLAttributes<HTMLDivElement> {
   type?: RowType;
   align?: RowAlign;

@@ -130,11 +130,57 @@ export const RowWrap = withProps({
     className: rowPrefixCls
 })(
     styled('div')(props => {
-        const { type, gutter } = props;
-        let gutterHor = gutter;
+        const {
+            type,
+            gutter,
+            theme: { designTokens: DT }
+        } = props;
+
+        const sizeScreenMap = {
+            xs: DT.T_SCREEN_XS,
+            sm: DT.T_SCREEN_SM,
+            md: DT.T_SCREEN_MD,
+            lg: DT.T_SCREEN_LG,
+            xl: DT.T_SCREEN_XL,
+            xxl: DT.T_SCREEN_XXL
+        };
+        const isObject = value => {
+            return value !== null && typeof value === 'object';
+        };
+
+        let gutterHor = null;
         let gutterVer = null;
+        // 响应式
+        let gutterHorResponsive = null;
+        let gutterVerResponsive = null;
+
+        if (typeof gutter === 'number') {
+            gutterHor = gutter;
+        }
+        // {sm: 1, lg: 8} 这种形式
+        if (isObject(gutter)) {
+            gutterHorResponsive = gutter;
+        }
         if (Array.isArray(gutter)) {
-            [gutterHor, gutterVer] = gutter;
+            const [_gutterHor, _gutterVer] = gutter;
+
+            /**
+             * [1, 9]
+             * [{sm: 1}, 9]
+             * [{sm: 1}, {sm: 9}]
+             * [1, {sm: 9}]
+             */
+            if (isObject(_gutterHor)) {
+                gutterHorResponsive = _gutterHor;
+            } else {
+                gutterHor = _gutterHor;
+            }
+
+            if (isObject(_gutterVer)) {
+                gutterVerResponsive = _gutterVer;
+            } else {
+                gutterVer = _gutterVer;
+            }
         }
         gutterHor = gutterHor / 2 || 0;
         gutterVer = gutterVer / 2 || 0;
@@ -157,6 +203,7 @@ export const RowWrap = withProps({
                       margin-bottom: ${-gutterVer + 'px'};
                   `
                 : null}
+
             ${justifyMixin(props)};
             ${alignMixin(props)};
 
@@ -174,6 +221,48 @@ export const RowWrap = withProps({
                       `
                     : null}
             }
+
+            ${gutterHorResponsive
+                ? sizes
+                      .filter(s => gutterHorResponsive[s] !== undefined)
+                      .map(s => {
+                          const _gutterHor = gutterHorResponsive[s] / 2 || 0;
+
+                          return `@media (min-width: ${sizeScreenMap[s]}px) {
+                        & {
+                            margin-left: ${-_gutterHor + 'px'};
+                            margin-right: ${-_gutterHor + 'px'};
+                        }
+
+                        & > .${colPrefixCls} {
+                            padding-left: ${_gutterHor + 'px'};
+                            padding-right: ${_gutterHor + 'px'};
+                        }
+                    }`;
+                      })
+                      .join('')
+                : null}
+
+            ${gutterVerResponsive
+                ? sizes
+                      .filter(s => gutterVerResponsive[s] !== undefined)
+                      .map(s => {
+                          const _gutterVer = gutterVerResponsive[s] / 2 || 0;
+
+                          return `@media (min-width: ${sizeScreenMap[s]}px) {
+                        & {
+                            margin-top: ${-_gutterVer + 'px'};
+                            margin-bottom: ${-_gutterVer + 'px'};
+                        }
+
+                        & > .${colPrefixCls} {
+                            padding-left: ${_gutterVer + 'px'};
+                            padding-right: ${_gutterVer + 'px'};
+                        }
+                    }`;
+                      })
+                      .join('')
+                : null}
         `;
     })
 );
