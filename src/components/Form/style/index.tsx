@@ -195,6 +195,7 @@ export const Tip = sWrap<{ status: string } & CombineProps>({ className: tipCls 
     const colorDt: DesignToken = ColorMap[status] || 'T_COLOR_TEXT_DEFAULT_LIGHT';
     return css`
       display: flex;
+      align-items: baseline;
       margin-top: 4px;
       color: ${DT[colorDt]};
       .${tipContentCls} {
