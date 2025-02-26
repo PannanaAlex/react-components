@@ -62,6 +62,8 @@ export interface ActionListProps {
   dropdownButton?: ReactNode | ButtonProps;
   /** 弹出层的 popover props */
   popoverProps?: any;
+  /** 不使用按钮形式，用户dropdownButton自定义 */
+  dropdownNoButton?: boolean;
 }
 
 const renderActionButtonList = ({
@@ -97,8 +99,9 @@ const ActionMenu = ({
   size,
   buttonStyleType,
   dropdownButton,
-  popoverProps
-}: Pick<ActionListProps, 'size' | 'buttonStyleType' | 'dropdownButton' | 'popoverProps'> & {
+  popoverProps,
+  dropdownNoButton
+}: Pick<ActionListProps, 'size' | 'buttonStyleType' | 'dropdownButton' | 'popoverProps' | 'dropdownNoButton'> & {
   list: ActionInfo[];
 }) => {
   const popoverConfigProps = usePopoverConfig();
@@ -138,9 +141,13 @@ const ActionMenu = ({
     >
       {dropdownButton ? (
         typeof dropdownButton === 'string' || React.isValidElement(dropdownButton) ? (
-          <Button size={size} styleType={buttonStyleType}>
-            {dropdownButton}
-          </Button>
+          dropdownNoButton ? (
+            dropdownButton
+          ) : (
+            <Button size={size} styleType={buttonStyleType}>
+              {dropdownButton}
+            </Button>
+          )
         ) : (
           <Button {...dropdownButton} />
         )
@@ -160,6 +167,7 @@ const ActionList = ({
   popoverProps,
   dropdownButton,
   className,
+  dropdownNoButton,
   ...rest
 }: ActionListProps & Override<HTMLAttributes<HTMLDivElement>, ActionListProps>) => {
   const l = actionList.length;
@@ -184,7 +192,13 @@ const ActionList = ({
     <Combine {...rest} className={classnames(prefixCls, className)} sharedProps={{ size }} spacing="smart">
       {renderActionButtonList({ list: buttonList, ...sharedProps })}
       {menuList.length ? (
-        <ActionMenu list={menuList} {...sharedProps} dropdownButton={dropdownButton} popoverProps={popoverProps} />
+        <ActionMenu
+          list={menuList}
+          {...sharedProps}
+          dropdownButton={dropdownButton}
+          popoverProps={popoverProps}
+          dropdownNoButton={dropdownNoButton}
+        />
       ) : null}
     </Combine>
   );
